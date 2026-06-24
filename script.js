@@ -1,6 +1,5 @@
-
-// TODO: Render deploy hone ke baad apna naya URL yahan paste karein
-const RENDER_BACKEND_URL = "https://  "https://reelpulse-pro-ai.onrender.com;
+// FIXED: Ekdum saaf aur sahi URL structure bina kisi extra quotes ya spaces ke
+const RENDER_BACKEND_URL = "https://reelpulse-pro-ai.onrender.com";
 
 async function generateContent() {
     const topic = document.getElementById('topic').value.trim();
@@ -56,13 +55,12 @@ async function generateContent() {
             let aiText = data.candidates[0].content.parts[0].text;
             
             // Format Markdown bold to HTML bold and newlines to linebreaks
-            aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            aiText = aiText.replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>');
             aiText = aiText.replace(/\n/g, '<br>');
             
             resultContent.innerHTML = aiText;
         } else if (data.error) {
             console.error("API Error Details:", data.error);
-            // FIXED (Line 48): Agar error ek object hai toh use string me convert karein, nahi toh direct print karein
             let errorMsg = typeof data.error === 'object' ? JSON.stringify(data.error) : data.error;
             resultContent.innerHTML = `❌ Error: ${errorMsg}`;
         } else {
