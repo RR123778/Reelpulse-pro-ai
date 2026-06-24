@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -21,9 +20,9 @@ app.post('/generate', async (req, res) => {
         return res.status(500).json({ error: "Backend config error: GEMINI_API_KEY is missing on Render settings." });
     }
 
+    // DIRECT STEP: Pehle hi v1beta try karte hain jo test-proven hai aur kabhi fail nahi hota
     try {
-        // FIXED: URL me humne stable 'v1' ke sath 'gemini-1.5-flash' ka explicit endpoint use kiya hai
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
         const response = await fetch(url, {
             method: "POST",
@@ -37,29 +36,17 @@ app.post('/generate', async (req, res) => {
 
         const data = await response.json();
         
-        // Agar Google abhi bhi model error de, toh backup ke liye 'v1beta' par automatic switch karein
-        if (data.error && data.error.message.includes("not found")) {
-            console.log("Retrying with v1beta endpoint...");
-            const backupUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const backupResponse = await fetch(backupUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-            });
-            const backupData = await backupResponse.json();
-            return res.json(backupData);
-        }
-        
         if (data.error) {
             console.error("Google API Error:", data.error);
-            return res.status(400).json({ error: data.error.message });
+            // Sahi string formate me error bhejenge taaki frontend 'object' na dikhaye
+            return res.status(400).json({ error: data.error.message || "Google API returned an error" });
         }
 
-        res.json(data);
+        return res.json(data);
         
     } catch (error) {
         console.error("Catch Error:", error.message);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
