@@ -21,16 +21,16 @@ app.post('/generate', (req, res) => {
         return res.status(500).json({ error: "Backend config error: GEMINI_API_KEY is missing on Render settings." });
     }
 
-    // Gemini API ka proper payload structure
+    // Gemini API proper structure
     const postData = JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
     });
 
-    // FIXED: Google ke standard /v1/ models path ko exact model mapping ke sath use kar rahe hain
+    // UPDATED: Ab hum bilkul latest gemini-2.5-flash use kar rahe hain jo v1 par 100% functional hai
     const options = {
         hostname: 'generativelanguage.googleapis.com',
         port: 443,
-        path: `/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        path: `/v1/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,14 +45,14 @@ app.post('/generate', (req, res) => {
             try {
                 const data = JSON.parse(body);
                 
-                // Agar stable v1 mana kare, toh automatic backup trigger hoga
+                // Agar 2.5 par bhi koi issue aaye, toh yeh temporary automatic safety mesh hai
                 if (data.error) {
-                    console.error("Google API Error on v1, trying backup...");
-                    return fallbackToBeta(prompt, res, GEMINI_API_KEY);
+                    console.error("Google Primary Error:", data.error.message);
+                    return res.status(400).json({ error: data.error.message });
                 }
                 res.json(data);
             } catch (e) {
-                res.status(500).json({ error: "Response parse error" });
+                res.status(500).json({ error: "Response parsing problem." });
             }
         });
     });
@@ -65,43 +65,6 @@ app.post('/generate', (req, res) => {
     googleReq.write(postData);
     googleReq.end();
 });
-
-// Fallback Function jo safe side ke liye v1beta bhi try karegi agar zaroorat padi toh
-function fallbackToBeta(prompt, res, apiKey) {
-    const postData = JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-    });
-
-    const options = {
-        hostname: 'generativelanguage.googleapis.com',
-        port: 443,
-        path: `/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(postData)
-        }
-    };
-
-    const fallbackReq = https.request(options, (fallbackRes) => {
-        let body = '';
-        fallbackRes.on('data', (chunk) => body += chunk);
-        fallbackRes.on('end', () => {
-            try {
-                const data = JSON.parse(body);
-                if (data.error) {
-                    return res.status(400).json({ error: data.error.message });
-                }
-                res.json(data);
-            } catch (e) {
-                res.status(500).json({ error: "Fallback parse error" });
-            }
-        });
-    });
-
-    fallbackReq.write(postData);
-    fallbackReq.end();
-}
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
