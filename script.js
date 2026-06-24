@@ -1,5 +1,5 @@
 // TODO: Render deploy hone ke baad apna naya URL yahan paste karein
-const RENDER_BACKEND_URL = "https://YOUR_NEW_RENDER_URL.onrender.com";
+const RENDER_BACKEND_URL = "    https://rr123778.github.io/Reelpulse-pro-ai/";
 
 async function generateContent() {
     const topic = document.getElementById('topic').value.trim();
