@@ -1,3 +1,4 @@
+
 // TODO: Render deploy hone ke baad apna naya URL yahan paste karein
 const RENDER_BACKEND_URL = "https://reelpulse-pro-ai.onrender.com";
 
@@ -60,7 +61,10 @@ async function generateContent() {
             
             resultContent.innerHTML = aiText;
         } else if (data.error) {
-            resultContent.innerHTML = `❌ Error: ${data.error}`;
+            console.error("API Error Details:", data.error);
+            // FIXED (Line 48): Agar error ek object hai toh use string me convert karein, nahi toh direct print karein
+            let errorMsg = typeof data.error === 'object' ? JSON.stringify(data.error) : data.error;
+            resultContent.innerHTML = `❌ Error: ${errorMsg}`;
         } else {
             resultContent.innerHTML = "❌ Error: Content generate nahi ho paya. Please try again.";
         }
