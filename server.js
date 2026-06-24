@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
@@ -12,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 // Main generate endpoint
-app.post('/generate', async (req, res) => {
+app.post('/generate', (req, res) => {
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     const { prompt } = req.body;
 
@@ -20,35 +21,87 @@ app.post('/generate', async (req, res) => {
         return res.status(500).json({ error: "Backend config error: GEMINI_API_KEY is missing on Render settings." });
     }
 
-    // DIRECT STEP: Pehle hi v1beta try karte hain jo test-proven hai aur kabhi fail nahi hota
-    try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-        
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
-        });
+    // Gemini API ka proper payload structure
+    const postData = JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+    });
 
-        const data = await response.json();
-        
-        if (data.error) {
-            console.error("Google API Error:", data.error);
-            // Sahi string formate me error bhejenge taaki frontend 'object' na dikhaye
-            return res.status(400).json({ error: data.error.message || "Google API returned an error" });
+    // FIXED: Google ke standard /v1/ models path ko exact model mapping ke sath use kar rahe hain
+    const options = {
+        hostname: 'generativelanguage.googleapis.com',
+        port: 443,
+        path: `/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
         }
+    };
 
-        return res.json(data);
-        
-    } catch (error) {
-        console.error("Catch Error:", error.message);
-        return res.status(500).json({ error: error.message });
-    }
+    const googleReq = https.request(options, (googleRes) => {
+        let body = '';
+        googleRes.on('data', (chunk) => body += chunk);
+        googleRes.on('end', () => {
+            try {
+                const data = JSON.parse(body);
+                
+                // Agar stable v1 mana kare, toh automatic backup trigger hoga
+                if (data.error) {
+                    console.error("Google API Error on v1, trying backup...");
+                    return fallbackToBeta(prompt, res, GEMINI_API_KEY);
+                }
+                res.json(data);
+            } catch (e) {
+                res.status(500).json({ error: "Response parse error" });
+            }
+        });
+    });
+
+    googleReq.on('error', (error) => {
+        console.error("Google Req Error:", error);
+        res.status(500).json({ error: error.message });
+    });
+
+    googleReq.write(postData);
+    googleReq.end();
 });
+
+// Fallback Function jo safe side ke liye v1beta bhi try karegi agar zaroorat padi toh
+function fallbackToBeta(prompt, res, apiKey) {
+    const postData = JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+    });
+
+    const options = {
+        hostname: 'generativelanguage.googleapis.com',
+        port: 443,
+        path: `/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
+        }
+    };
+
+    const fallbackReq = https.request(options, (fallbackRes) => {
+        let body = '';
+        fallbackRes.on('data', (chunk) => body += chunk);
+        fallbackRes.on('end', () => {
+            try {
+                const data = JSON.parse(body);
+                if (data.error) {
+                    return res.status(400).json({ error: data.error.message });
+                }
+                res.json(data);
+            } catch (e) {
+                res.status(500).json({ error: "Fallback parse error" });
+            }
+        });
+    });
+
+    fallbackReq.write(postData);
+    fallbackReq.end();
+}
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
