@@ -21,16 +21,15 @@ app.post('/generate', (req, res) => {
         return res.status(500).json({ error: "Backend config error: GEMINI_API_KEY is missing on Render settings." });
     }
 
-    // Gemini API proper structure
     const postData = JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
     });
 
-    // UPDATED: Ab hum bilkul latest gemini-2.5-flash use kar rahe hain jo v1 par 100% functional hai
+    // Hum direct 'gemini-2.5-flash' target kar rahe hain jo bilkul naya hai aur ispe load restriction nahi hai
     const options = {
         hostname: 'generativelanguage.googleapis.com',
         port: 443,
-        path: `/v1/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        path: `/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,10 +44,11 @@ app.post('/generate', (req, res) => {
             try {
                 const data = JSON.parse(body);
                 
-                // Agar 2.5 par bhi koi issue aaye, toh yeh temporary automatic safety mesh hai
                 if (data.error) {
-                    console.error("Google Primary Error:", data.error.message);
-                    return res.status(400).json({ error: data.error.message });
+                    console.error("Primary Model Error:", data.error.message);
+                    
+                    // SMART BACKUP: Agar high demand ya koi error aaye, toh turant backup model par bhej do
+                    return tryBackupModel(prompt, res, GEMINI_API_KEY);
                 }
                 res.json(data);
             } catch (e) {
@@ -58,13 +58,49 @@ app.post('/generate', (req, res) => {
     });
 
     googleReq.on('error', (error) => {
-        console.error("Google Req Error:", error);
         res.status(500).json({ error: error.message });
     });
 
     googleReq.write(postData);
     googleReq.end();
 });
+
+// Backup function jo automatic load shift karegi
+function tryBackupModel(prompt, res, apiKey) {
+    const postData = JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+    });
+
+    const options = {
+        hostname: 'generativelanguage.googleapis.com',
+        port: 443,
+        path: `/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
+        }
+    };
+
+    const backupReq = https.request(options, (backupRes) => {
+        let body = '';
+        backupRes.on('data', (chunk) => body += chunk);
+        backupRes.on('end', () => {
+            try {
+                const data = JSON.parse(body);
+                if (data.error) {
+                    return res.status(400).json({ error: "Google standard servers are busy. Please try after 1 minute." });
+                }
+                res.json(data);
+            } catch (e) {
+                res.status(500).json({ error: "Backup parsing error" });
+            }
+        });
+    });
+
+    backupReq.write(postData);
+    backupReq.end();
+}
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
