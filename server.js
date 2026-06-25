@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
@@ -15,7 +14,6 @@ app.get('/', (req, res) => {
 
 // Main generate endpoint
 app.post('/generate', (req, res) => {
-    // SECURE: Ab key direct code me nahi hai, Render se safe load hogi
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     const { prompt } = req.body;
 
@@ -27,10 +25,11 @@ app.post('/generate', (req, res) => {
         contents: [{ parts: [{ text: prompt }] }]
     });
 
+    // FIXED: Ab hum stable /v1/ path aur standard model structural definition use kar rahe hain
     const options = {
         hostname: 'generativelanguage.googleapis.com',
         port: 443,
-        path: `/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        path: `/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
