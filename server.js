@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
@@ -14,9 +15,13 @@ app.get('/', (req, res) => {
 
 // Main generate endpoint
 app.post('/generate', (req, res) => {
-    // FIXED: Aapki API Key bina kisi extra space ke direct insert kar di gayi hai
-    const GEMINI_API_KEY = "";
+    // SECURE: Ab key direct code me nahi hai, Render se safe load hogi
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     const { prompt } = req.body;
+
+    if (!GEMINI_API_KEY) {
+        return res.status(500).json({ error: "Backend config error: GEMINI_API_KEY is missing on Render Dashboard." });
+    }
 
     const postData = JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
