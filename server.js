@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 // Main generate endpoint
 app.post('/generate', (req, res) => {
     // FIXED: Aapki API Key bina kisi extra space ke direct insert kar di gayi hai
-    const GEMINI_API_KEY = "     ";
+    const GEMINI_API_KEY = "";
     const { prompt } = req.body;
 
     const postData = JSON.stringify({
