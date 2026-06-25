@@ -25,11 +25,11 @@ app.post('/generate', (req, res) => {
         contents: [{ parts: [{ text: prompt }] }]
     });
 
-    // FIXED: Ab hum stable /v1/ path aur standard model structural definition use kar rahe hain
+    // CHANGED: Ab hum bilkul naya 'gemini-2.5-flash' model aur sahi 'v1beta' path use kar rahe hain
     const options = {
         hostname: 'generativelanguage.googleapis.com',
         port: 443,
-        path: `/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        path: `/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
