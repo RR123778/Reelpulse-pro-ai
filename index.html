@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,17 +28,40 @@
         .result-text { font-size: 1rem; line-height: 1.6; white-space: pre-line; word-wrap: break-word; }
         .copy-btn { margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
         .copy-btn:hover { background: var(--text); color: var(--dark); }
-        .ad-banner { width: 100%; max-width: 650px; height: 90px; background: #1a1e2e; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.2); margin: 10px 0; color: #7f8c8d; }
-        .blog-links { width: 100%; max-width: 650px; text-align: center; font-size: 0.9rem; margin-top: 20px; }
+        
+        /* High Earning Ad Buttons */
+        .adsterra-box { width: 100%; max-width: 650px; padding: 15px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.2); margin: 10px 0; }
+        .adsterra-link-btn { display: inline-block; background: linear-gradient(45deg, #ff416c, #ff4b2b); color: #ffffff !important; text-decoration: none !important; font-weight: bold; font-size: 14px; padding: 12px 24px; border-radius: 25px; box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4); animation: pulseGlow 2s infinite; transition: 0.2s; text-align: center; width: 90%; }
+        .adsterra-link-btn:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(255, 65, 108, 0.6); }
+        
+        /* Coffee UPI Button styling */
+        .coffee-container { text-align: center; margin: 35px auto 15px auto; padding: 15px; width: 100%; max-width: 650px; }
+        .coffee-upi-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ffdd00 0%, #f7b731 100%); color: #000000 !important; text-decoration: none !important; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 30px; box-shadow: 0 4px 12px rgba(247, 183, 49, 0.3); transition: all 0.2s ease-in-out; }
+        .coffee-upi-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(247, 183, 49, 0.5); }
+        .coffee-icon { font-size: 18px; margin-right: 6px; animation: wiggle 2s infinite; }
+        
+        .blog-links { width: 100%; max-width: 650px; text-align: center; font-size: 0.9rem; margin-top: 10px; }
         .blog-links a { color: var(--secondary); text-decoration: none; margin: 0 10px; font-weight: 500; }
         .blog-links a:hover { text-decoration: underline; }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 65, 108, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0); }
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg) translateY(-2px); }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top Ad Banner -->
-    <div class="ad-banner">
-        [Top Ad Banner - Paste Your AdSense Code Here]
+    <!-- HIGH-CONVERTING TOP ADSTERRA LINK -->
+    <div class="adsterra-box">
+        <a href="https://omg10.com/4/11206422" target="_blank" class="adsterra-link-btn">
+            🔥 [Trending] Get 500+ Viral Reels Video Templates Free 🎁
+        </a>
     </div>
 
     <div class="container">
@@ -74,16 +98,28 @@
         </div>
     </div>
 
-    <!-- Bottom Links -->
-    <div class="blog-links">
-        📖 Humare Best Blog Posts Padhein:<br><br>
-        <a href="#" target="_blank">🔗 Online Paise Kaise Kamayein?</a> | 
-        <a href="#" target="_blank">🔗 Ghar Bainte Viral Content Kaise Banayein?</a>
+    <!-- HIGH-CONVERTING BOTTOM ADSTERRA LINK -->
+    <div class="adsterra-box" style="margin-top: 10px;">
+        <a href="https://omg10.com/4/11206422" target="_blank" class="adsterra-link-btn" style="background: linear-gradient(45deg, #00f2fe, #4facfe);">
+            🚀 [Bonus] Download CapCut Viral XML & Effects Presets Free! 🎬
+        </a>
     </div>
 
-    <!-- Bottom Ad Banner -->
-    <div class="ad-banner" style="margin-top: 25px;">
-        [Bottom Ad Banner - Paste Your AdSense Code Here]
+    <!-- FIXED: REAL UPI CONFIGURATION FOR COFFEE DONATION -->
+    <div class="coffee-container">
+        <p style="color: #888; font-size: 13px; margin-bottom: 10px; letter-spacing: 0.5px;">
+            ReelPulse Pro pasand aaya? Chaho toh ek coffee pila sakte ho! ☕
+        </p>
+        <a href="upi://pay?pa=8874432934@ybl&pn=ReelPulse%20Pro&cu=INR" class="coffee-upi-btn">
+            <span class="coffee-icon">☕</span> Buy Me A Coffee (UPI)
+        </a>
+    </div>
+
+    <!-- Bottom Links -->
+    <div class="blog-links">
+        wrap 📖 Humare Best Blog Posts Padhein:<br><br>
+        <a href="#" target="_blank">🔗 Online Paise Kaise Kamayein?</a> | 
+        <a href="#" target="_blank">🔗 Ghar Bainte Viral Content Kaise Banayein?</a>
     </div>
 
     <script src="script.js"></script>
