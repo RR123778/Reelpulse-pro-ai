@@ -7,7 +7,7 @@
     <!-- MONETAG SITE VERIFICATION TAG -->
     <meta name="monetag" content="0dd9435d15b3ae40ab5e7ebacbe4a48b">
     
-    <title>ReelPulse Pro - AI Viral Script Generator</title>
+    <title>ReelPulse Pro - Global AI Viral Script Generator</title>
     <style>
         :root {
             --primary: #ff0055;
@@ -44,7 +44,7 @@
         .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
         .wa-icon { font-size: 18px; margin-right: 8px; }
 
-        /* Coffee UPI Button styling */
+        /* Global Coffee Donation styling */
         .coffee-container { text-align: center; margin: 20px auto 15px auto; padding: 10px; width: 100%; max-width: 650px; }
         .coffee-upi-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ffdd00 0%, #f7b731 100%); color: #000000 !important; text-decoration: none !important; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 30px; box-shadow: 0 4px 12px rgba(247, 183, 49, 0.3); transition: all 0.2s ease-in-out; }
         .coffee-upi-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(247, 183, 49, 0.5); }
@@ -81,23 +81,24 @@
 
     <div class="container">
         <h1>🎬 ReelPulse Pro</h1>
-        <div class="subtitle">Get Viral Scripts, Captions & Hashtags in 5 Seconds</div>
+        <div class="subtitle">Generate Viral Scripts, Captions & Hashtags in Any Language!</div>
 
         <div class="form-group">
-            <label for="topic">Topic / Niche Dalein:</label>
-            <input type="text" id="topic" placeholder="e.g., Online Paise Kaise Kamaye, Gym Motivation...">
+            <label for="topic">Enter Topic / Niche:</label>
+            <input type="text" id="topic" placeholder="e.g., How to make money online, Gym Motivation...">
         </div>
 
         <div class="form-group">
-            <label for="platform">Platform Chunein:</label>
+            <label for="platform">Select Platform:</label>
             <select id="platform">
                 <option value="Instagram Reels">Instagram Reels</option>
                 <option value="YouTube Shorts">YouTube Shorts</option>
+                <option value="TikTok Video">TikTok Video</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="tone">Video ki Vibe/Tone:</label>
+            <label for="tone">Select Video Tone / Vibe:</label>
             <select id="tone">
                 <option value="Energetic & Fast-paced">Energetic & Fast-paced</option>
                 <option value="Informative & Educational">Informative & Educational</option>
@@ -105,11 +106,23 @@
             </select>
         </div>
 
-        <button class="btn" id="generateBtn" onclick="generateContent()">🚀 Generate Content</button>
+        <!-- NEW LANGUAGE SELECTOR -->
+        <div class="form-group">
+            <label for="language">Select Output Language:</label>
+            <select id="language">
+                <option value="en">English 🇺🇸</option>
+                <option value="hi">Hindi / Hinglish 🇮🇳</option>
+                <option value="es">Spanish 🇪🇸</option>
+                <option value="fr">French 🇫🇷</option>
+                <option value="de">German 🇩🇪</option>
+            </select>
+        </div>
+
+        <button class="btn" id="generateBtn" onclick="generateContent()">🚀 Generate Viral Script</button>
 
         <div class="output-box" id="output">
             <div class="result-text" id="result-content"></div>
-            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy All</button>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Entire Script</button>
         </div>
     </div>
 
@@ -127,66 +140,102 @@
         </a>
     </div>
 
-    <!-- COFFEE DONATION -->
+    <!-- GLOBAL BUY ME A COFFEE DONATION (Change 'yourusername' later) -->
     <div class="coffee-container">
         <p style="color: #888; font-size: 13px; margin-bottom: 10px; letter-spacing: 0.5px;">
-            ReelPulse Pro pasand aaya? Chaho toh ek coffee pila sakte ho! ☕
+            Loving ReelPulse Pro? Support us by buying a coffee! ☕
         </p>
-        <a href="upi://pay?pa=8874432934@ybl&pn=ReelPulse%20Pro&cu=INR" class="coffee-upi-btn">
-            <span class="coffee-icon">☕</span> Buy Me A Coffee (UPI)
+        <a href="https://buymeacoffee.com/yourusername" target="_blank" class="coffee-upi-btn">
+            <span class="coffee-icon">☕</span> Buy Me A Coffee
         </a>
     </div>
 
     <!-- Bottom Links -->
     <div class="blog-links">
-        📖 Humare Best Blog Posts Padhein:<br><br>
-        <a href="https://omg10.com/4/11209906" target="_blank">🔗 Online Paise Kaise Kamayein?</a> | 
-        <a href="https://omg10.com/4/11209906" target="_blank">🔗 Ghar Baithe Viral Content Kaise Banayein?</a>
+        📖 Read Our Viral Growth Blogs:<br><br>
+        <a href="https://omg10.com/4/11209906" target="_blank">🔗 How to Earn Money Online?</a> | 
+        <a href="https://omg10.com/4/11209906" target="_blank">🔗 How to Go Viral From Home?</a>
     </div>
 
-    <!-- INTERNAL JAVASCRIPT LOGIC -->
+    <!-- DYNAMIC GLOBAL JAVASCRIPT LOGIC -->
     <script>
         function generateContent() {
             const topic = document.getElementById('topic').value.trim();
             const platform = document.getElementById('platform').value;
             const tone = document.getElementById('tone').value;
+            const lang = document.getElementById('language').value;
             const btn = document.getElementById('generateBtn');
             const outputBox = document.getElementById('output');
             const resultContent = document.getElementById('result-content');
 
             if (!topic) {
-                alert('Bhai, pehle koi Topic toh daalo!');
+                alert('Please enter a topic first!');
                 return;
             }
 
-            btn.innerText = "⏳ Generating AI Script...";
+            btn.innerText = "⏳ Generating Global AI Script...";
             btn.disabled = true;
 
             setTimeout(() => {
-                let script = `🔥 **[VIRAL SCRIPT FOR ${platform.toUpperCase()}]**\n`;
-                script += `📌 **Topic:** ${topic}\n`;
-                script += `🎭 **Vibe:** ${tone}\n\n`;
-                script += `⏳ **0:00 - 0:03 (HOOK):** \n[Boom Sound Effect] Kya aapko pata hai ki ${topic} ka ek aisa secret hai jo 99% log nahi jaante? Ruko, agle 20 second mein sab samjhata hoon!\n\n`;
-                script += `💡 **0:03 - 0:12 (BODY):** \nStep 1: Sabse pehle dhyan do sahi strategy par. Step 2: Consistent raho aur फालतu methods par time waste mat karo. Agar aap sahi tarike se mehnat karoge toh result 10x milega.\n\n`;
-                script += `🚀 **0:12 - 0:15 (CTA):** \nAgar video acchi lagi toh abhi SAVE kar lo aur aise hi daily viral growth tips ke liye mujhe FOLLOW karna mat bhulna!\n\n`;
-                script += `📝 **BEST CAPTION:**\n"Stop scrolling! 🛑 Agar aap bhi ${topic} ke baare mein serious ho, toh ye video aapke liye hai. Apne dosto ke sath SHARE karo! 👇 #Growth"\n\n`;
-                script += `🏷️ **VIRAL HASHTAGS:**\n#${topic.replace(/\s+/g, '')} #viralshorts #trendingreels #creators #aimagic #reelpulse`;
+                let script = "";
+                const cleanTopic = topic.replace(/\s+/g, '');
+
+                if (lang === "en") {
+                    script += `🔥 **[VIRAL SCRIPT FOR ${platform.toUpperCase()}]**\n📌 **Topic:** ${topic}\n🎭 **Vibe:** ${tone}\n\n`;
+                    script += `⏳ **0:00 - 0:03 (HOOK):** \n[Boom Sound Effect] Did you know there is a massive secret about "${topic}" that 99% of people don't know? Wait, let me break it down in 20 seconds!\n\n`;
+                    script += `💡 **0:03 - 0:12 (BODY):** \nStep 1: Focus on the right blueprint. Step 2: Stop chasing outdated methods and stay consistent. If you implement this strategy right now, your results will scale by 10x.\n\n`;
+                    script += `🚀 **0:12 - 0:15 (CTA):** \nIf you found this helpful, make sure to SAVE this video for later and FOLLOW for daily viral hacks!\n\n`;
+                    script += `📝 **BEST CAPTION:**\n"Stop scrolling! 🛑 If you are serious about ${topic}, this is your sign. Share this with a friend who needs to see this! 👇 #Growth"\n\n`;
+                    script += `🏷️ **VIRAL HASHTAGS:**\n#${cleanTopic} #viralshorts #trendingreels #creators #aimagic #reelpulse`;
+                } 
+                else if (lang === "es") {
+                    script += `🔥 **[GUIÓN VIRAL PARA ${platform.toUpperCase()}]**\n📌 **Tema:** ${topic}\n🎭 **Tono:** ${tone}\n\n`;
+                    script += `⏳ **0:00 - 0:03 (GANCHO):** \n[Efecto de sonido de explosión] ¿Sabías que hay un gran secreto sobre "${topic}" que el 99% de las personas no conocen? ¡Espera, te lo explico en 20 segundos!\n\n`;
+                    script += `💡 **0:03 - 0:12 (CUERPO):** \nPaso 1: Enfócate en la estrategia correcta. Paso 2: Deja de seguir métodos obsoletos y mantén la constancia. Si aplicas esto ahora, ¡tus resultados se multiplicarán por 10x!\n\n`;
+                    script += `🚀 **0:12 - 0:15 (CTA):** \nSi esto te ayudó, ¡asegúrate de GUARDAR este video y SEGUIRME para trucos virales diarios!\n\n`;
+                    script += `📝 **MEJOR SUBTÍTULO:**\n"¡Deja de deslizar! 🛑 Si vas en serio con ${topic}, esta es tu señal. ¡Compártelo con un amigo! 👇 #Crecimiento"\n\n`;
+                    script += `🏷️ **HASHTAGS VIRALES:**\n#${cleanTopic} #reelsvirales #creadores #inteligenciaartificial #reelpulse`;
+                } 
+                else if (lang === "fr") {
+                    script += `🔥 **[SCRIPT VIRAL POUR ${platform.toUpperCase()}]**\n📌 **Sujet:** ${topic}\n🎭 **Ton:** ${tone}\n\n`;
+                    script += `⏳ **0:00 - 0:03 (ACCROCHE):** \n[Effet sonore d'explosion] Saviez-vous qu'il existe un énorme secret sur "${topic}" que 99 % des gens ignorent ? Attendez, je vous explique ça en 20 secondes !\n\n`;
+                    script += `💡 **0:03 - 0:12 (CORPS):** \nÉtape 1 : Concentrez-vous sur la bonne stratégie. Étape 2 : Arrêtez de perdre du temps avec des méthodes inutiles et soyez régulier. Si vous appliquez cela, vos résultats seront multipliés par 10 !\n\n`;
+                    script += `🚀 **0:12 - 0:15 (CTA):** \nSi cela vous a aidé, ENREGISTREZ cette vidéo et ABONNEZ-VOUS pour des astuces virales quotidiennes !\n\n`;
+                    script += `📝 **MEILLEURE LÉGENDE:**\n"Arrêtez de scroller ! 🛑 Si vous êtes sérieux au sujet de ${topic}, c'est le moment. Partagez ça avec un ami ! 👇 #Croissance"\n\n`;
+                    script += `🏷️ **HASHTAGS VIRAUX:**\n#${cleanTopic} #reelsviraux #createurs #astuces #reelpulse`;
+                } 
+                else if (lang === "de") {
+                    script += `🔥 **[VIRALES SKRIPT FÜR ${platform.toUpperCase()}]**\n📌 **Thema:** ${topic}\n🎭 **Vibe:** ${tone}\n\n`;
+                    script += `⏳ **0:00 - 0:03 (HOOK):** \n[Boom-Soundeffekt] Wusstest du, dass es ein riesiges Geheimnis über "${topic}" gibt, das 99 % der Menschen nicht kennen? Warte, ich erkläre es dir in 20 Sekunden!\n\n`;
+                    script += `💡 **0:03 - 0:12 (HAUPTTEIL):** \nSchritt 1: Fokussiere dich auf die richtige Strategie. Schritt 2: Bleib konsistent und verschwende keine Zeit mehr mit alten Methoden. Wenn du das umsetzt, werden sich deine Ergebnisse verzehnfachen!\n\n`;
+                    script += `🚀 **0:12 - 0:15 (CTA):** \nWenn das hilfreich war, SPEICHERE dieses Video für später und FOLGE mir für tägliche virale Hacks!\n\n`;
+                    script += `📝 **BESTE BESCHREIBUNG:**\n"Hör auf zu scrollen! 🛑 Wenn du es mit ${topic} ernst meinst, ist das dein Zeichen. Teile es mit einem Freund! 👇 #Erfolg"\n\n`;
+                    script += `🏷️ **VIRALE HASHTAGS:**\n#${cleanTopic} #viralerfolg #creators #tipps #reelpulse`;
+                } 
+                else { // Default to Hindi / Hinglish
+                    script += `🔥 **[VIRAL SCRIPT FOR ${platform.toUpperCase()}]**\n📌 **Topic:** ${topic}\n🎭 **Vibe:** ${tone}\n\n`;
+                    script += `⏳ **0:00 - 0:03 (HOOK):** \n[Boom Sound Effect] Kya aapko pata hai ki "${topic}" ka ek aisa secret hai jo 99% log nahi jaante? Ruko, agle 20 second mein sab samjhata hoon!\n\n`;
+                    script += `💡 **0:03 - 0:12 (BODY):** \nStep 1: Sabse pehle dhyan do sahi strategy par. Step 2: Consistent raho aur फालतू methods par time waste mat karo. Agar aap sahi tarike se mehnat karoge toh result 10x milega.\n\n`;
+                    script += `🚀 **0:12 - 0:15 (CTA):** \nAgar video acchi lagi toh abhi SAVE kar lo aur aise hi daily viral growth tips ke liye mujhe FOLLOW karna mat bhulna!\n\n`;
+                    script += `📝 **BEST CAPTION:**\n"Stop scrolling! 🛑 Agar aap bhi ${topic} ke baare mein serious ho, toh ye video aapke liye hai. Share karo! 👇 #Growth"\n\n`;
+                    script += `🏷️ **VIRAL HASHTAGS:**\n#${cleanTopic} #viralshorts #trendingreels #creators #aimagic #reelpulse`;
+                }
 
                 resultContent.innerText = script;
                 outputBox.style.display = "block";
-                btn.innerText = "🚀 Generate Content";
+                btn.innerText = "🚀 Generate Viral Script";
                 btn.disabled = false;
                 
                 outputBox.scrollIntoView({ behavior: 'smooth' });
-            }, 1500);
+            }, 1200);
         }
 
         function copyToClipboard() {
             const text = document.getElementById('result-content').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('📋 Poori Script Copy Ho Gayi Hai!');
+                alert('📋 Script successfully copied to clipboard!');
             }).catch(err => {
-                alert('Oops, copy nahi ho paya!');
+                alert('Oops, copy failed!');
             });
         }
     </script>
