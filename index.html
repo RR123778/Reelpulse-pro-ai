@@ -15,6 +15,7 @@
             --dark: #0f111a;
             --card-bg: #1e2235;
             --text: #ffffff;
+            --whatsapp: #25d366;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--dark); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; }
@@ -28,7 +29,7 @@
         .btn { width: 100%; padding: 14px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border: none; border-radius: 8px; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255,0,85,0.3); }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,242,254,0.4); }
         .output-box { display: none; margin-top: 25px; background: #131622; border-radius: 10px; padding: 20px; border-left: 4px solid var(--primary); position: relative; }
-        .result-text { font-size: 1rem; line-height: 1.6; white-space: pre-line; word-wrap: break-word; }
+        .result-text { font-size: 1rem; line-height: 1.6; white-space: pre-line; word-wrap: break-word; color: #fff; }
         .copy-btn { margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
         .copy-btn:hover { background: var(--text); color: var(--dark); }
         
@@ -37,13 +38,19 @@
         .monetag-link-btn { display: inline-block; background: linear-gradient(45deg, #ff416c, #ff4b2b); color: #ffffff !important; text-decoration: none !important; font-weight: bold; font-size: 14px; padding: 12px 24px; border-radius: 25px; box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4); animation: pulseGlow 2s infinite; transition: 0.2s; text-align: center; width: 90%; }
         .monetag-link-btn:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(255, 65, 108, 0.6); }
         
+        /* WhatsApp Channel Button Styling */
+        .whatsapp-container { text-align: center; margin: 15px auto; padding: 10px; width: 100%; max-width: 650px; }
+        .whatsapp-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #25d366 0%, #075e54 100%); color: #ffffff !important; text-decoration: none !important; font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: all 0.2s ease-in-out; width: 90%; max-width: 400px; animation: whatsappGlow 2.5s infinite; }
+        .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
+        .wa-icon { font-size: 18px; margin-right: 8px; }
+
         /* Coffee UPI Button styling */
-        .coffee-container { text-align: center; margin: 35px auto 15px auto; padding: 15px; width: 100%; max-width: 650px; }
+        .coffee-container { text-align: center; margin: 20px auto 15px auto; padding: 10px; width: 100%; max-width: 650px; }
         .coffee-upi-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ffdd00 0%, #f7b731 100%); color: #000000 !important; text-decoration: none !important; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 30px; box-shadow: 0 4px 12px rgba(247, 183, 49, 0.3); transition: all 0.2s ease-in-out; }
         .coffee-upi-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(247, 183, 49, 0.5); }
         .coffee-icon { font-size: 18px; margin-right: 6px; animation: wiggle 2s infinite; }
         
-        .blog-links { width: 100%; max-width: 650px; text-align: center; font-size: 0.9rem; margin-top: 10px; }
+        .blog-links { width: 100%; max-width: 650px; text-align: center; font-size: 0.9rem; margin-top: 10px; color: #888; }
         .blog-links a { color: var(--secondary); text-decoration: none; margin: 0 10px; font-weight: 500; }
         .blog-links a:hover { text-decoration: underline; }
 
@@ -51,6 +58,11 @@
             0% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(255, 65, 108, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 65, 108, 0); }
+        }
+        @keyframes whatsappGlow {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
         @keyframes wiggle {
             0%, 100% { transform: rotate(0deg); }
@@ -108,7 +120,14 @@
         </a>
     </div>
 
-    <!-- FIXED: REAL UPI CONFIGURATION FOR COFFEE DONATION -->
+    <!-- WHATSAPP CHANNEL JOIN BUTTON -->
+    <div class="whatsapp-container">
+        <a href="https://whatsapp.com/channel/0029VbCOdaTKrWR0cuReYb2y" target="_blank" class="whatsapp-btn">
+            <span class="wa-icon">📢</span> Join Our Viral WhatsApp Channel
+        </a>
+    </div>
+
+    <!-- COFFEE DONATION -->
     <div class="coffee-container">
         <p style="color: #888; font-size: 13px; margin-bottom: 10px; letter-spacing: 0.5px;">
             ReelPulse Pro pasand aaya? Chaho toh ek coffee pila sakte ho! ☕
@@ -121,10 +140,55 @@
     <!-- Bottom Links -->
     <div class="blog-links">
         📖 Humare Best Blog Posts Padhein:<br><br>
-        <a href="#" target="_blank">🔗 Online Paise Kaise Kamayein?</a> | 
-        <a href="#" target="_blank">🔗 Ghar Bainte Viral Content Kaise Banayein?</a>
+        <a href="https://omg10.com/4/11209906" target="_blank">🔗 Online Paise Kaise Kamayein?</a> | 
+        <a href="https://omg10.com/4/11209906" target="_blank">🔗 Ghar Baithe Viral Content Kaise Banayein?</a>
     </div>
 
-    <script src="script.js"></script>
+    <!-- INTERNAL JAVASCRIPT LOGIC -->
+    <script>
+        function generateContent() {
+            const topic = document.getElementById('topic').value.trim();
+            const platform = document.getElementById('platform').value;
+            const tone = document.getElementById('tone').value;
+            const btn = document.getElementById('generateBtn');
+            const outputBox = document.getElementById('output');
+            const resultContent = document.getElementById('result-content');
+
+            if (!topic) {
+                alert('Bhai, pehle koi Topic toh daalo!');
+                return;
+            }
+
+            btn.innerText = "⏳ Generating AI Script...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                let script = `🔥 **[VIRAL SCRIPT FOR ${platform.toUpperCase()}]**\n`;
+                script += `📌 **Topic:** ${topic}\n`;
+                script += `🎭 **Vibe:** ${tone}\n\n`;
+                script += `⏳ **0:00 - 0:03 (HOOK):** \n[Boom Sound Effect] Kya aapko pata hai ki ${topic} ka ek aisa secret hai jo 99% log nahi jaante? Ruko, agle 20 second mein sab samjhata hoon!\n\n`;
+                script += `💡 **0:03 - 0:12 (BODY):** \nStep 1: Sabse pehle dhyan do sahi strategy par. Step 2: Consistent raho aur फालतu methods par time waste mat karo. Agar aap sahi tarike se mehnat karoge toh result 10x milega.\n\n`;
+                script += `🚀 **0:12 - 0:15 (CTA):** \nAgar video acchi lagi toh abhi SAVE kar lo aur aise hi daily viral growth tips ke liye mujhe FOLLOW karna mat bhulna!\n\n`;
+                script += `📝 **BEST CAPTION:**\n"Stop scrolling! 🛑 Agar aap bhi ${topic} ke baare mein serious ho, toh ye video aapke liye hai. Apne dosto ke sath SHARE karo! 👇 #Growth"\n\n`;
+                script += `🏷️ **VIRAL HASHTAGS:**\n#${topic.replace(/\s+/g, '')} #viralshorts #trendingreels #creators #aimagic #reelpulse`;
+
+                resultContent.innerText = script;
+                outputBox.style.display = "block";
+                btn.innerText = "🚀 Generate Content";
+                btn.disabled = false;
+                
+                outputBox.scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('result-content').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('📋 Poori Script Copy Ho Gayi Hai!');
+            }).catch(err => {
+                alert('Oops, copy nahi ho paya!');
+            });
+        }
+    </script>
 </body>
 </html>
