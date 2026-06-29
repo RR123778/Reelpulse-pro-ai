@@ -1,4 +1,4 @@
-// FIXED: Ekdum saaf aur sahi URL structure bina kisi extra quotes ya spaces ke
+// ✅ Clean backend URL
 const RENDER_BACKEND_URL = "https://reelpulse-pro-ai.onrender.com";
 
 async function generateContent() {
@@ -14,30 +14,55 @@ async function generateContent() {
         return;
     }
 
-    // UI Loading state
+    // 🎲 Random Hook Style Generator
+    const hookStyles = [
+        "Question",
+        "Shock",
+        "Bold claim",
+        "Story",
+        "Controversy",
+        "Curiosity"
+    ];
+    const randomStyle = hookStyles[Math.floor(Math.random() * hookStyles.length)];
+
+    // UI Loading
     outputBox.style.display = "block";
-    resultContent.innerHTML = "⏳ <strong>ReelPulse AI</strong> is thinking & creating a viral plan... Please wait!";
+    resultContent.innerHTML = "⏳ <strong>ReelPulse AI</strong> viral content bana raha hai... Please wait!";
     generateBtn.disabled = true;
     generateBtn.innerHTML = "Generating Script...";
     generateBtn.style.opacity = "0.7";
 
-    // High engagement prompt structure
-    const promptText = `You are a world-class social media viral strategist. Create a complete high-engagement video plan.
-    Platform: ${platform}
-    Topic: ${topic}
-    Tone: ${tone}
-    Language: Pure Hinglish (Natural Hindi + English mix, conversational style).
+    // 🔥 SUPER PROMPT (Unique Hook Fix)
+    const promptText = `You are a world-class social media viral strategist.
 
-    Format the output strictly like this with icons:
-    🔥 **VIRAL HOOK (First 3 Seconds):** [Hook]
-    
-    📝 **VIDEO SCRIPT (Step-by-Step):** [Provide 3 highly engaging steps/points]
-    
-    🎯 **CALL TO ACTION (CTA):** [High converting CTA]
-    
-    ✍️ **ATTRACTIVE CAPTION:** [Ready-to-use aesthetic caption]
-    
-    #️⃣ **VIRAL HASHTAGS:** [Trending hashtags separated by spaces]`;
+IMPORTANT RULES:
+- Generate a COMPLETELY UNIQUE hook every time.
+- NEVER repeat hooks like "Did you know..."
+- Hook must be highly engaging and scroll-stopping.
+- Use this Hook Style: ${randomStyle}
+- Use curiosity, emotion, or shock.
+
+Platform: ${platform}
+Topic: ${topic}
+Tone: ${tone}
+Language: Pure Hinglish (Natural Hindi + English mix).
+
+Also generate 3 hook options internally and pick the BEST one.
+
+Format strictly:
+
+🔥 **VIRAL HOOK (First 3 Seconds):** [Hook]
+
+📝 **VIDEO SCRIPT (Step-by-Step):**
+1. [Point]
+2. [Point]
+3. [Point]
+
+🎯 **CALL TO ACTION (CTA):** [CTA]
+
+✍️ **ATTRACTIVE CAPTION:** [Caption]
+
+#️⃣ **VIRAL HASHTAGS:** [Hashtags separated by spaces]`;
 
     try {
         const response = await fetch(`${RENDER_BACKEND_URL}/generate`, {
@@ -50,18 +75,27 @@ async function generateContent() {
 
         const data = await response.json();
 
-        // Safe check for Gemini structural output
-        if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+        if (
+            data.candidates &&
+            data.candidates[0].content &&
+            data.candidates[0].content.parts &&
+            data.candidates[0].content.parts[0].text
+        ) {
             let aiText = data.candidates[0].content.parts[0].text;
-            
-            // Format Markdown bold to HTML bold and newlines to linebreaks
-            aiText = aiText.replace(/\*\*(.*?)\*\"/g, '<strong>$1</strong>');
+
+            // ✅ FIXED Bold Regex
+            aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Line break formatting
             aiText = aiText.replace(/\n/g, '<br>');
-            
+
             resultContent.innerHTML = aiText;
         } else if (data.error) {
             console.error("API Error Details:", data.error);
-            let errorMsg = typeof data.error === 'object' ? JSON.stringify(data.error) : data.error;
+            let errorMsg = typeof data.error === 'object'
+                ? JSON.stringify(data.error)
+                : data.error;
+
             resultContent.innerHTML = `❌ Error: ${errorMsg}`;
         } else {
             resultContent.innerHTML = "❌ Error: Content generate nahi ho paya. Please try again.";
@@ -77,23 +111,28 @@ async function generateContent() {
     }
 }
 
-// Global Copy function
+// 📋 Copy Function
 function copyToClipboard() {
     const textToCopy = document.getElementById('result-content').innerText;
     const tempTextArea = document.createElement("textarea");
+
     tempTextArea.value = textToCopy;
     document.body.appendChild(tempTextArea);
     tempTextArea.select();
 
     try {
         document.execCommand('copy');
+
         const copyBtn = document.querySelector('.copy-btn');
         copyBtn.innerText = "✅ Copied!";
+
         setTimeout(() => {
             copyBtn.innerText = "📋 Copy All";
         }, 2000);
+
     } catch (err) {
         alert("Copy nahi ho paya!");
     }
+
     document.body.removeChild(tempTextArea);
 }
