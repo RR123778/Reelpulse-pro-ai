@@ -4,12 +4,13 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// CORS open rakhna zaroori hai taaki aapka GitHub frontend isse baat kar sake
 app.use(cors());
 app.use(express.json());
 
 // Base Route
 app.get('/', (req, res) => {
-    res.send("ReelPulse Pro Backend Server is Running Securely!");
+    res.send("ReelPulse Pro Backend Server is Running Securely on Render!");
 });
 
 // Main generate endpoint
@@ -25,7 +26,6 @@ app.post('/generate', (req, res) => {
         contents: [{ parts: [{ text: prompt }] }]
     });
 
-    // CHANGED: Ab hum bilkul naya 'gemini-2.5-flash' model aur sahi 'v1beta' path use kar rahe hain
     const options = {
         hostname: 'generativelanguage.googleapis.com',
         port: 443,
